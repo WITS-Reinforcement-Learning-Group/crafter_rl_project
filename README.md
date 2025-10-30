@@ -1,8 +1,8 @@
 
 # DQN Baseline
-python train_dqn.py --env_id CrafterPartial-v1 --total_timesteps 1000000
-python eval_crafter_metrics.py --model dqn_crafter_baseline.zip --episodes 20 --logdir logs/dqn_csv
-python plot_learning_curve.py --csv logs/dqn_csv/progress.csv --out dqn_base_curve.png
+python train_dqn.py --env_id CrafterPartial-v1 --total_timesteps 1000000 \
+python eval_crafter_metrics.py --model dqn_crafter_baseline.zip --episodes 20 --logdir logs/dqn_csv \
+python plot_learning_curve.py --csv logs/dqn_csv/progress.csv --out dqn_base_curve.png \
 python crafter_eval_summary.py --path logs/dqn_csv/stats.jsonl --out dqn_summary.png --title "DQN Baseline Evaluation"
 
 # DQN with Reward Shaping
