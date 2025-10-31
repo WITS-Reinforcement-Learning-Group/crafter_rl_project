@@ -25,6 +25,12 @@ conda activate crafter_env
 python -c "import crafter; import stable_baselines3; print('Setup successful!')"
 ```
 
+### Optional: GA Conda Environment
+```bash
+conda env create -f crafterGA/environment.yml
+conda activate crafter_env_ga
+```
+
 ## 🏃 Training
 
 ### PPO Training (1M steps each)
@@ -65,6 +71,22 @@ python train_dqn_per_nstep1.py --env_id CrafterPartial-v1 --total_timesteps 1000
 ```bash
 python train_dqn_noisy_nstep.py --env_id CrafterPartial-v1 --total_timesteps 1000000
 ```
+### GA Training (200 generations each)
+
+**Baseline Training:**
+```bash
+python train_ga.py --outdir logdir/crafter_ga_base/final --steps 200
+```
+
+**Improvement 1 Training:**
+```bash
+python train_ga_surv_v3.py --outdir logdir/crafter_ga_imp2/final --steps 200
+```
+
+**Improvement 2 Training:**
+```bash
+python train_ga_surv_v4.py --outdir logdir/crafter_ga_imp3/final --steps 200
+```
 
 ## 📊 Evaluation
 
@@ -98,6 +120,38 @@ python plot_learning_curve.py --csv logs/dqn_noisy_nstep_csv/progress.csv --out 
 python crafter_eval_summary.py --path logs/dqn_noisy_nstep_csv/stats.jsonl --out dqn_noisy_nstep_summary.png --title "DQN Noisy + N-step Evaluation"
 ```
 
+### GA Evaluation
+**Baseline Evaluation:**
+```bash
+python pygadEval.py --model_path logdir/crafter_ga_base/final/best_ga_policy.pth --outdir logdir/crafter_ga_eval/base --seed 42
+```
+
+**Improvment 1 Evaluation:**
+```bash
+python pygadEvalImp1.py --model_path logdir/crafter_ga_imp1/final/best_ga_policy.pth --outdir logdir/crafter_ga_eval/imp2/final --seed 42
+```
+
+**Improvment 2 Evaluation:**
+```bash
+python pygadEvalImp1.py --model_path logdir/crafter_ga_imp2/final/best_ga_policy.pth --outdir logdir/crafter_ga_eval/imp3/final --seed 42
+```
+
+**Animation Creation:**
+```bash
+python viewEpisode.py --filename logdir/crafter_ga_eval/base/episode.npz
+```
+```bash
+python viewEpisode.py --filename logdir/crafter_ga_eval/imp2/final/episode.npz
+```
+```bash
+python viewEpisode.py --filename logdir/crafter_ga_eval/imp3/final/episode.npz
+```
+
+**Graph Creation:**
+```bash
+python pygadPlots.py
+```
+
 ## 🔍 Monitoring Training
 
 Monitor PPO training with TensorBoard:
@@ -116,6 +170,7 @@ tensorboard --logdir logdir/
 ├── train_dqn_RShape.py          # DQN + Reward Shaping
 ├── train_dqn_per_nstep1.py      # DQN + N-step
 ├── train_dqn_noisy_nstep.py     # DQN + Noisy + N-step
+├── crafterGA/                   # GA Files
 └── logdir/                      # Training outputs
 ```
 
@@ -123,6 +178,7 @@ tensorboard --logdir logdir/
 
 - [Crafter Benchmark](https://github.com/danijar/crafter)
 - [Stable-Baselines3](https://stable-baselines3.readthedocs.io/)
+- [PyGAD](https://pygad.readthedocs.io/en/latest/index.html)
 
 ---
 
