@@ -1,0 +1,30 @@
+name: crafter_env_ga
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10.18
+  - numpy=1.26.4
+  - psutil=7.0.0
+  - pip
+  - matplotlib
+  - tqdm
+
+  - pip:
+      - filelock==3.19.1
+      - fsspec==2025.9.0
+      - jinja2==3.1.6
+      - markupsafe==3.0.2
+      - mpmath==1.3.0
+      - networkx==3.4.2
+      - sympy==1.14.0
+      - torch==2.8.0
+      - typing-extensions==4.15.0
+
+      - gym
+      - gymnasium
+      - stable_baselines3
+      - crafter
+      - shimmy
+      - pygad
+      - pandas
